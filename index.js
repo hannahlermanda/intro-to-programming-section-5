@@ -25,7 +25,10 @@ function getRandomNumber(min, max) {
 function checkGuess() {
   // Get value from guess input element
   const guess = parseInt(guessInput.value, 10);
-  attempts = attempts + 1;
+ 
+  if (guess >= 1 && guess <= 99) {
+    attempts = attempts + 1;
+  }
 
   hideAllMessages();
 
@@ -46,11 +49,26 @@ function checkGuess() {
       tooHighMessage.style.display = '';
     }
 
-    const remainingAttempts = maxNumberOfAttempts - attempts;
+    let remainingAttempts = maxNumberOfAttempts - attempts;
+
+    if (guess < 1){
+      alert("The number you guessed is lower than 1.");
+    }
+  
+    if (guess > 99){
+      alert("The number you guessed is greater than 99.");
+    }
 
     numberOfGuessesMessage.style.display = '';
-    numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} guesses remaining`;
+    if (remainingAttempts > 1){
+      numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} guesses remaining`;
+    } else {
+      numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} guess remaining`;
+    }
+
   }
+
+  
 
   if (attempts === maxNumberOfAttempts) {
     submitButton.disabled = true;
